@@ -22,7 +22,7 @@ function App() {
         e.preventDefault();
         setHighlighted(false);
         Array.from(e.dataTransfer.files).filter((file) => file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").forEach(async(file) => {
-          console.log(file);
+          console.log(file.name);
           const fileReader = new FileReader();
           fileReader.readAsArrayBuffer(file);
     
@@ -41,13 +41,6 @@ function App() {
       >
         Drop Here
       </div>
-      <ul>
-        {users.map((user) =>(
-          <li key={user.name}>
-            <strong>{user.firstName}</strong>: {user.lastName}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
