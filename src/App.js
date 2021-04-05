@@ -4,14 +4,14 @@ import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
 
 function App() {
-  const [highlighted, setHighlighted] = React.useState(false);
+  //const [highlighted, setHighlighted] = React.useState(false);
   const [users, setUsers] = React.useState([]);
 
   const getUpluadParams = ({ meta }) => { return {url: 'https://httpbin.org/post' }};
-  const handleChangeStatus = ({meta, file}, status) => { console.log(status, meta, file.name)};
+  const handleChangeStatus = ({meta, file}, status) => { console.log(status, meta, file.name,sheet(file))};
   const handleSubmit = (files) => {console.log(files.map(f => f.meta))};
 
-  const sheet = (file) => {
+  function sheet (file) {
     const fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
 
@@ -25,7 +25,6 @@ function App() {
     console.log(data)
     setUsers((existing) => [...existing, ...data])
     }
-    console.log(sheet.data)
   }
 
   return (
@@ -71,11 +70,22 @@ function App() {
   //       <button className="btn btn-success p-2 bd-highlight" onClick={() => postData()}>Upload</button>
   //     </div>
   //   </div>
-    <Dropzone
+    <React.Fragment>
+      <Dropzone
       getUploadParams={getUpluadParams}
       onChangeStatus={handleChangeStatus}
       onSubmit={handleSubmit}
     />
+    <div>
+      <ul>
+        {users.map((user) => (
+          <li key={user.email}>
+            {user.email}
+          </li>
+        ))}
+      </ul>
+    </div>
+    </React.Fragment>
   );
 }
 
